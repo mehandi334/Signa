@@ -30,7 +30,6 @@
       overflow: hidden;
     }
 
-    /* Animated dot background inside box */
     .box::before {
       content: "";
       position: absolute;
@@ -86,6 +85,41 @@
     .btn:hover {
       transform: scale(1.05);
     }
+
+    /* Dialog styles */
+    .dialog {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      background: rgba(255, 255, 255, 0.95);
+      color: black;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      text-align: center;
+      z-index: 999;
+      animation: popIn 0.4s ease-out, fadeOut 0.4s ease-in 2.6s forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+      }
+    }
   </style>
 </head>
 <body>
@@ -95,7 +129,23 @@
       ALL SERVER CONNECTED
       <span class="emoji">💸</span>
     </div>
-    <button class="btn">Activate Prediction</button>
+    <button class="btn" onclick="showDialog()">Activate Prediction</button>
   </div>
+
+  <script>
+    function showDialog() {
+      const dialog = document.createElement("div");
+      dialog.className = "dialog";
+      dialog.innerHTML = `
+        <strong>⚠️ Your Wallet Balance is Low</strong><br><br>
+        Please Deposit ₹200<br>
+        Current Balance: ₹0.0
+      `;
+      document.body.appendChild(dialog);
+      setTimeout(() => {
+        dialog.remove();
+      }, 3000);
+    }
+  </script>
 </body>
 </html>
